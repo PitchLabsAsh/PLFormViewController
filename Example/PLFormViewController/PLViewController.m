@@ -37,12 +37,11 @@
     [memDataSource addItems:@[nameElement,dateElement,timeElement,repeatElement]];
     [memDataSource addItems:@[repeatFormatElement,weeksElemet,lightElemet] toSection:1];
     
-//    DTSectionModel *mainSection = (DTSectionModel*)self.memoryStorage.sections[0];
-//    [mainSection setTableSectionHeader:@"Event details"];
-//    
-//    DTSectionModel *displaySection = (DTSectionModel*)self.memoryStorage.sections[1];
-//    [displaySection setTableSectionHeader:@"Display details"];
-
+    PLDataSourceSection *section = memDataSource.sections[0];
+    section.headerModel = @"Section1";
+    
+    PLDataSourceSection *section2 = memDataSource.sections[1];
+    section2.headerModel = @"Section2";
 }
 
 - (void)didReceiveMemoryWarning

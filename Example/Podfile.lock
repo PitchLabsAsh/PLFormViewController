@@ -1,12 +1,12 @@
 PODS:
   - Expecta (1.0.5)
-  - PLForm (0.1.0):
+  - PLForm (HEAD based on 0.1.0):
     - PureLayout
   - PLFormViewController (0.1.0):
     - PLForm
     - PLTableManager
     - PureLayout
-  - PLTableManager (0.1.0)
+  - PLTableManager (HEAD based on 0.1.0)
   - PureLayout (3.0.1)
   - Reveal-iOS-SDK (1.6.2)
   - Specta (1.0.5)
@@ -14,7 +14,9 @@ PODS:
 
 DEPENDENCIES:
   - Expecta
+  - PLForm (HEAD)
   - PLFormViewController (from `../`)
+  - PLTableManager (HEAD)
   - Reveal-iOS-SDK
   - Specta
   - TPKeyboardAvoiding
