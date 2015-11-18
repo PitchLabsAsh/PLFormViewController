@@ -7,7 +7,8 @@
 //
 
 @import UIKit;
+@import PLFormViewController;
 
-@interface PLViewController : UIViewController
+@interface PLViewController : PLFormViewController
 
 @end
