@@ -1,0 +1,36 @@
+PODS:
+  - Expecta (1.0.5)
+  - PLForm (0.1.0):
+    - PureLayout
+  - PLFormViewController (0.1.0):
+    - PLForm
+    - PLTableManager
+    - PureLayout
+  - PLTableManager (0.1.0)
+  - PureLayout (3.0.1)
+  - Reveal-iOS-SDK (1.6.2)
+  - Specta (1.0.5)
+  - TPKeyboardAvoiding (1.2.10)
+
+DEPENDENCIES:
+  - Expecta
+  - PLFormViewController (from `../`)
+  - Reveal-iOS-SDK
+  - Specta
+  - TPKeyboardAvoiding
+
+EXTERNAL SOURCES:
+  PLFormViewController:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  PLForm: ef064dd7ac7ad54f02bd3471ea58a0178a49e621
+  PLFormViewController: 1f0b7ddd6bf0022354773ea2a537ee2b2b22c8ed
+  PLTableManager: 150aaea1bcc099e0507870ae11cfe745e6d96e18
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
+  Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+  TPKeyboardAvoiding: 614ebec846ec28b83d548769297fa5fb56468904
+
+COCOAPODS: 0.39.0

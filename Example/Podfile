@@ -3,6 +3,9 @@ use_frameworks!
 
 target 'PLFormViewController_Example', :exclusive => true do
   pod "PLFormViewController", :path => "../"
+  
+  pod 'TPKeyboardAvoiding'
+  pod 'Reveal-iOS-SDK'
 end
 
 target 'PLFormViewController_Tests', :exclusive => true do
