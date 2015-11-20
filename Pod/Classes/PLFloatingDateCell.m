@@ -28,6 +28,7 @@
         _dateField = [[PLFloatingLabelDateField alloc] initWithFrame:self.bounds];
         [self addSubview:_dateField];
         [_dateField autoPinEdgesToSuperviewEdges];
+        _dateField.userInteractionEnabled = NO;
     }
     return self;
     
@@ -39,6 +40,13 @@
     {
         [self.dateField updateWithElement:model];
     }
+}
+
+
+// dates are inline, so we dont want the date to become the first responder
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
 @end

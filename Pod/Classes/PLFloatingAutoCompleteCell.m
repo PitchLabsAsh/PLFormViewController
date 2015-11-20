@@ -27,6 +27,7 @@
         _selectField = [[PLFloatingLabelAutoCompleteField alloc] initWithFrame:self.bounds];
         [self addSubview:_selectField];
         [_selectField autoPinEdgesToSuperviewEdges];
+        _selectField.userInteractionEnabled = NO;
     }
     return self;
     
@@ -36,8 +37,34 @@
 {
     if ([model isKindOfClass:[PLFormAutoCompleteFieldElement class]])
     {
-        [self.selectField updateWithElement:model];
+        [_selectField updateWithElement:model];
     }
+}
+
+
+- (BOOL)canBecomeFirstResponder
+{
+    return [_selectField canBecomeFirstResponder];
+}
+
+- (BOOL)becomeFirstResponder;
+{
+    return [_selectField becomeFirstResponder];
+}
+
+- (BOOL)canResignFirstResponder;
+{
+    return [_selectField canResignFirstResponder];
+}
+
+- (BOOL)resignFirstResponder;
+{
+    return [_selectField resignFirstResponder];
+}
+
+- (BOOL)isFirstResponder;
+{
+    return [_selectField isFirstResponder];
 }
 
 @end

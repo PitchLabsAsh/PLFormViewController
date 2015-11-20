@@ -114,6 +114,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // correct the index path if we have a current inline cell
+    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (currentInlineIndexPath)
     {
@@ -139,7 +141,22 @@
             {
                 [self removeInlineViewFromIndexPath:currentInlineIndexPath];
             }
-            [self insertInlineViewForIndexPath:indexPath];
+            if ([selectedCell canBecomeFirstResponder])
+            {
+                [self insertInlineViewForIndexPath:indexPath];
+                [selectedCell becomeFirstResponder];
+            }
+        }
+    }
+    else
+    {
+        if ([selectedCell canBecomeFirstResponder])
+        {
+            if (currentInlineIndexPath)
+            {
+                [self removeInlineViewFromIndexPath:currentInlineIndexPath];
+            }
+            [selectedCell becomeFirstResponder];
         }
     }
 }
