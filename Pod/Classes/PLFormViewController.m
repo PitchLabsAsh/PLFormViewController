@@ -11,6 +11,7 @@
 #import "PLFloatingLabelCell.h"
 #import "PLFloatingDateCell.h"
 #import "PLFloatingSelectCell.h"
+#import "PLFloatingAutoCompleteCell.h"
 #import "PLSwitchCell.h"
 #import "PLFormInlineViewCell.h"
 
@@ -43,6 +44,7 @@
     [self.cellFactory registerCellClass:[PLFloatingLabelCell class] forModelClass:[PLFormTextFieldElement class]];
     [self.cellFactory registerCellClass:[PLFloatingDateCell class] forModelClass:[PLFormDateFieldElement class]];
     [self.cellFactory registerCellClass:[PLFloatingSelectCell class] forModelClass:[PLFormSelectFieldElement class]];
+    [self.cellFactory registerCellClass:[PLFloatingAutoCompleteCell class] forModelClass:[PLFormAutoCompleteFieldElement class]];
     [self.cellFactory registerCellClass:[PLSwitchCell class] forModelClass:[PLFormSwitchFieldElement class]];
 }
 
