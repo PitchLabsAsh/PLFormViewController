@@ -1,5 +1,5 @@
 //
-//  PLMemoryDataSource+PLForm.h
+//  PLDataSource+PLForm.h
 //  Pitch
 //
 //  Created by Ashley Thwaites on 05/01/2015.
@@ -11,8 +11,9 @@
 @import PLForm;
 @import PLTableManager;
 
-@interface PLMemoryDataSource (PLForm)
+@interface PLDataSource (PLForm)
 
 -(PLFormElement*)elementWithId:(NSInteger)elementId;
+-(PLCondition*)findFirstFailedCondition;
 
 @end
