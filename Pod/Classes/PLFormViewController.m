@@ -35,7 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     inlineViews = [NSMutableDictionary dictionaryWithCapacity:10];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIDatePicker class]];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIPickerView class]];
@@ -56,9 +56,19 @@
 - (void)setupTableViewControllerDefaults
 {
     // the default animations used on data source changes
-    [super setupTableViewControllerDefaults];    
+    [super setupTableViewControllerDefaults];
     self.deleteRowAnimation = UITableViewRowAnimationFade;
+    self.insertRowAnimation = UITableViewRowAnimationFade;
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
 
 // handle the inline insertion delegates
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -115,7 +125,7 @@
 {
     // correct the index path if we have a current inline cell
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (currentInlineIndexPath)
     {
@@ -171,12 +181,36 @@
 
 - (void)insertInlineViewForIndexPath:(NSIndexPath *)indexPath
 {
-    id presenter = inlineViews[indexPath];
+    UIView *presenter = inlineViews[indexPath];
     
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
     [self.memoryDataSource insertItem:presenter toIndexPath:insertIndexPath];
-    [self.tableView scrollToRowAtIndexPath:insertIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
+    // check if we need to scroll
+    UITableViewCell *insertingCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    CGFloat inlineBottom = insertingCell.frame.origin.y + insertingCell.frame.size.height + presenter.bounds.size.height;
+    if (inlineBottom > self.tableView.bounds.size.height - self.tableView.contentInset.top)
+    {
+        // to get a smooth scroll animation smooth we need to reload the table immediatly
+        // the downside is we loose the insert animation..
+        [self.tableView reloadData];
+        double y = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+        CGPoint bottomOffset = CGPointMake(0,y);
+        [self.tableView setContentOffset:bottomOffset animated:YES];
+    }
+    
+    
     currentInlineIndexPath = indexPath;
+}
+
+-(NSIndexPath*)lastIndexPath{
+    PLDataSourceSection *section = [self.dataSource.sections lastObject];
+    if (section == nil)
+    {
+        return nil;
+    }
+    
+    return [NSIndexPath indexPathForRow:section.objects.count-1 inSection:self.dataSource.sections.count-1];
 }
 
 - (void)removeInlineViewFromIndexPath:(NSIndexPath *)indexPath
@@ -184,6 +218,19 @@
     NSIndexPath * pickerIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
     [self.memoryDataSource removeItem:[self.memoryDataSource itemAtIndexPath:pickerIndexPath]];
     currentInlineIndexPath = nil;
+    
+    // for some reason removing a cell causes a section seperator line to appear
+    
+    NSIndexPath *lastPath = [self lastIndexPath];
+    UITableViewCell *lastCell = [self.tableView cellForRowAtIndexPath:lastPath];
+    for (UIView *view in lastCell.subviews)
+    {
+        if ((view.bounds.size.width == lastCell.bounds.size.width) &&
+            (view != lastCell.contentView))
+        {
+            view.hidden = YES;
+        }
+    }
 }
 
 
