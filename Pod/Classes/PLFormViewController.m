@@ -38,6 +38,7 @@
     inlineViews = [NSMutableDictionary dictionaryWithCapacity:10];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIDatePicker class]];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIPickerView class]];
+    [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UICollectionView class]];
     
     // register all the cell class types
     [self.cellFactory registerCellClass:[PLFloatingLabelCell class] forModelClass:[PLFormTextFieldElement class]];
@@ -83,7 +84,10 @@
         }
         
         // if we have a view already for this index we probably need to replace it on the cell..
-        [inlineViews setObject:floatingSelectCell.selectField.pickerView forKey:indexPath];
+        if (floatingSelectCell.selectField.element.items)
+            [inlineViews setObject:floatingSelectCell.selectField.collectionView forKey:indexPath];
+        else
+            [inlineViews setObject:floatingSelectCell.selectField.pickerView forKey:indexPath];
     }
 }
 

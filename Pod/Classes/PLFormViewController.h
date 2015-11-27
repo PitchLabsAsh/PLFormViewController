@@ -9,6 +9,6 @@
 
 @import PLTableManager;
 
-@interface PLFormViewController : PLTableViewController
+@interface PLFormViewController : PLTableViewController <UITableViewDelegate>
 
 @end
