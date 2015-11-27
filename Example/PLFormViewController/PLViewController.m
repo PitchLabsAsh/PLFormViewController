@@ -38,7 +38,8 @@
     PLFormSelectFieldElement *selectFieldElement2 = [PLFormSelectFieldElement selectElementWithID:2 title:@"Select Option" items:items index:0 delegate:self];
     PLFormSwitchFieldElement *weeksElemet = [PLFormSwitchFieldElement switchFieldElementWithID:5 title:@"Display weeks" value:NO delegate:self];
     PLFormSwitchFieldElement *lightElemet = [PLFormSwitchFieldElement switchFieldElementWithID:7 title:@"Light theme" value:NO delegate:self];
-    
+    PLFormAutoCompleteFieldElement *autoCompleteElement = [PLFormAutoCompleteFieldElement selectElementWithID:1 placeholderText:@"Select Option" values:@[@"Dog",@"Cat",@"Rabbity Rabbit",@"Horse",@"Dog",@"Cat",@"Rabbit",@"Horse",@"Dog",@"Cat",@"Rabbit",@"Horse"] delegate:self];
+    autoCompleteElement.displayAllWhenBlank = YES;
     
 
     
@@ -47,7 +48,7 @@
     self.dataSource = memDataSource;
     
     [memDataSource addItems:@[nameElement,dateElement,timeElement,repeatElement]];
-    [memDataSource addItems:@[selectFieldElement2,weeksElemet,lightElemet] toSection:1];
+    [memDataSource addItems:@[selectFieldElement2,weeksElemet,lightElemet,autoCompleteElement] toSection:1];
     
     PLDataSourceSection *section = memDataSource.sections[0];
     section.headerModel = @"Section1";

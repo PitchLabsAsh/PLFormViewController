@@ -12,6 +12,7 @@
 
 @interface PLFormInlineViewCell ()
 {
+    UIView *clipView;
     UIView *inlineView;
 }
 
@@ -20,12 +21,28 @@
 
 @implementation PLFormInlineViewCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(nullable NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    if(self)
+    {
+        clipView = [UIView new];
+        clipView.clipsToBounds = YES;
+        [self.contentView addSubview:clipView];
+        [clipView autoPinEdgesToSuperviewEdges];
+    }
+    return self;
+    
+}
+
+
 - (void)updateWithModel:(id)model
 {
     if ([model isKindOfClass:[UIView class]])
     {
         inlineView = (UIView*)model;
-        [self.contentView addSubview:inlineView];
+        [clipView addSubview:inlineView];
         [inlineView autoPinEdgesToSuperviewEdges];
     }
 }

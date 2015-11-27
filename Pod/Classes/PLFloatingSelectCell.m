@@ -25,8 +25,9 @@
     if(self)
     {
         _selectField = [[PLFloatingLabelSelectField alloc] initWithFrame:self.bounds];
-        [self addSubview:_selectField];
+        [self.contentView addSubview:_selectField];
         [_selectField autoPinEdgesToSuperviewEdges];
+        _selectField.userInteractionEnabled = NO;
     }
     return self;
     
@@ -36,8 +37,15 @@
 {
     if ([model isKindOfClass:[PLFormSelectFieldElement class]])
     {
-        [self.selectField updateWithElement:model];
+        [_selectField updateWithElement:model];
     }
+}
+
+
+// selectes are inline, so we dont want the selectfield to become the first responder
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
 @end
