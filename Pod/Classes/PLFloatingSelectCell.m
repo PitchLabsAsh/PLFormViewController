@@ -25,7 +25,7 @@
     if(self)
     {
         _selectField = [[PLFloatingLabelSelectField alloc] initWithFrame:self.bounds];
-        [self addSubview:_selectField];
+        [self.contentView addSubview:_selectField];
         [_selectField autoPinEdgesToSuperviewEdges];
         _selectField.userInteractionEnabled = NO;
     }

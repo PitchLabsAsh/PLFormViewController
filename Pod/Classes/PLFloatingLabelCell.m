@@ -27,7 +27,7 @@
     if(self)
     {
         _textField = [[PLFloatingLabelTextField alloc] initWithFrame:self.bounds];
-        [self addSubview:_textField];
+        [self.contentView addSubview:_textField];
         [_textField autoPinEdgesToSuperviewEdges];
         _textField.userInteractionEnabled = NO;
     }

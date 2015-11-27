@@ -27,7 +27,7 @@
     if(self)
     {
         _switchField = [[PLFormSwitchField alloc] initWithFrame:self.bounds];
-        [self addSubview:_switchField];
+        [self.contentView addSubview:_switchField];
         [_switchField autoPinEdgesToSuperviewEdges];
     }
     return self;

@@ -26,7 +26,7 @@
     if(self)
     {
         _dateField = [[PLFloatingLabelDateField alloc] initWithFrame:self.bounds];
-        [self addSubview:_dateField];
+        [self.contentView addSubview:_dateField];
         [_dateField autoPinEdgesToSuperviewEdges];
         _dateField.userInteractionEnabled = NO;
     }

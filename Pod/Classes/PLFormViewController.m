@@ -172,8 +172,10 @@
 - (void)insertInlineViewForIndexPath:(NSIndexPath *)indexPath
 {
     id presenter = inlineViews[indexPath];
-    [self.memoryDataSource insertItem:presenter toIndexPath:[NSIndexPath indexPathForRow:indexPath.row + 1
-                                                                            inSection:indexPath.section]];
+    
+    NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
+    [self.memoryDataSource insertItem:presenter toIndexPath:insertIndexPath];
+    [self.tableView scrollToRowAtIndexPath:insertIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     currentInlineIndexPath = indexPath;
 }
 
