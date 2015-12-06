@@ -17,7 +17,7 @@
 
 @import PLForm;
 
-@interface PLTableViewController ()
+@interface PLTableViewController () <UIGestureRecognizerDelegate>
 
 - (void)setupTableViewControllerDefaults;
 
@@ -47,12 +47,57 @@
     [self.cellFactory registerCellClass:[PLFloatingSelectCell class] forModelClass:[PLFormSelectFieldElement class]];
     [self.cellFactory registerCellClass:[PLFloatingAutoCompleteCell class] forModelClass:[PLFormAutoCompleteFieldElement class]];
     [self.cellFactory registerCellClass:[PLSwitchCell class] forModelClass:[PLFormSwitchFieldElement class]];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapGesture.delegate = self;
+    [self.tableView addGestureRecognizer:tapGesture];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (UIView*)findFirstResponderBeneathView:(UIView*)view {
+    // Search recursively for first responder
+    for ( UIView *childView in view.subviews ) {
+        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+        UIView *result = [self findFirstResponderBeneathView:childView];
+        if ( result ) return result;
+    }
+    return nil;
+}
+
+- (void)handleTap:(UIGestureRecognizer*)sender
+{
+    // we tapped somewhere outside a cell..
+    UIView *responder = [self findFirstResponderBeneathView:self.tableView];
+    if (responder)
+        [responder resignFirstResponder];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
+{
+    CGPoint point = [touch locationInView:self.tableView];
+    NSIndexPath* index = [self.tableView indexPathForRowAtPoint:point];
+    
+    // There seems to be a small bug in indexPathForRowAtPoint becuase it taps inside
+    // the last section header / footer return a cell, so we need to double check
+    // the tap is actually in the cell it says it was
+    if (index)
+    {
+        UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:index];
+        point = [touch locationInView:cell];
+        
+        if (point.y < 0 || point.y >= cell.frame.size.height) {
+            index = nil;
+        }
+    }
+    
+    return index == nil;
+}
+
+
 
 - (void)setupTableViewControllerDefaults
 {
@@ -164,7 +209,11 @@
     }
     else
     {
-        if ([selectedCell canBecomeFirstResponder])
+        if ([selectedCell isFirstResponder])
+        {
+            [selectedCell resignFirstResponder];
+        }
+        else if ([selectedCell canBecomeFirstResponder])
         {
             if (currentInlineIndexPath)
             {
@@ -174,6 +223,9 @@
         }
     }
 }
+
+
+
 
 #pragma mark - adding and removing picker
 -(PLMemoryDataSource*)memoryDataSource
