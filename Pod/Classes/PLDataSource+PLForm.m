@@ -13,10 +13,13 @@
 
 -(PLFormElement*)elementWithId:(NSInteger)elementId
 {
-    for (PLDataSourceSection *section in self.sections)
+    NSInteger numSections = self.numberOfSections;
+    for (int section = 0; section < numSections; section++)
     {
-        for (PLFormElement *element in section.objects)
+        NSInteger numItems = [self numberOfItemsInSection:section];
+        for (int item = 0; item < numItems; item++)
         {
+            PLFormElement *element = [self itemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:section]];
             if ([element isKindOfClass:[PLFormElement class]])
             {
                 if (element.elementID == elementId)
@@ -29,10 +32,13 @@
 
 -(PLCondition*)findFirstFailedCondition
 {
-    for (PLDataSourceSection *section in self.sections)
+    NSInteger numSections = self.numberOfSections;
+    for (int section = 0; section < numSections; section++)
     {
-        for (PLFormElement *element in section.objects)
+        NSInteger numItems = [self numberOfItemsInSection:section];
+        for (int item = 0; item < numItems; item++)
         {
+            PLFormElement *element = [self itemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:section]];
             if ([element isKindOfClass:[PLFormElement class]])
             {
                 PLValidator *validator = (PLValidator*)element.validator;

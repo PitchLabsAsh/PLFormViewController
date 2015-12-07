@@ -50,11 +50,8 @@
     [memDataSource addItems:@[nameElement,dateElement,timeElement,repeatElement]];
     [memDataSource addItems:@[selectFieldElement2,weeksElemet,lightElemet,autoCompleteElement] toSection:1];
     
-    PLDataSourceSection *section = memDataSource.sections[0];
-    section.headerModel = @"Section1";
-    
-    PLDataSourceSection *section2 = memDataSource.sections[1];
-    section2.headerModel = @"Section2";
+    [memDataSource setSectionHeaderModel:@"Section1" forSectionIndex:0];
+    [memDataSource setSectionHeaderModel:@"Section2" forSectionIndex:1];
 }
 
 - (void)didReceiveMemoryWarning

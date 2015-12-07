@@ -259,14 +259,10 @@
     currentInlineIndexPath = indexPath;
 }
 
--(NSIndexPath*)lastIndexPath{
-    PLDataSourceSection *section = [self.dataSource.sections lastObject];
-    if (section == nil)
-    {
-        return nil;
-    }
-    
-    return [NSIndexPath indexPathForRow:section.objects.count-1 inSection:self.dataSource.sections.count-1];
+-(NSIndexPath*)lastIndexPath{    
+    NSInteger numSections = [self.dataSource numberOfSections];
+    NSInteger numItems = [self.dataSource numberOfItemsInSection:numSections-1];
+    return [NSIndexPath indexPathForRow:numItems-1 inSection:numSections-1];
 }
 
 - (void)removeInlineViewFromIndexPath:(NSIndexPath *)indexPath
