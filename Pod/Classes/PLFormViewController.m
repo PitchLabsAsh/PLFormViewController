@@ -115,6 +115,22 @@
     return cell;
 }
 
+-(NSIndexPath*)pathCorrectedForInlineView:(NSIndexPath*)indexPath
+{
+    if (currentInlineIndexPath)
+    {
+        if (currentInlineIndexPath.section == indexPath.section)
+        {
+            if (currentInlineIndexPath.row<indexPath.row)
+            {
+                indexPath = [NSIndexPath indexPathForRow:indexPath.row-1
+                                               inSection:indexPath.section];
+            }
+        }
+    }
+    return indexPath;
+}
+
 
 // handle the inline insertion delegates
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -129,7 +145,7 @@
         }
         
         // if we have a view already for this index we probably need to replace it on the cell..
-        [inlineViews setObject:floatingDateCell.dateField.datePicker forKey:indexPath];
+        [inlineViews setObject:floatingDateCell.dateField.datePicker forKey:[self pathCorrectedForInlineView:indexPath]];
     }
     
     if ([cell isKindOfClass:[PLFloatingSelectCell class]])
@@ -142,9 +158,9 @@
         
         // if we have a view already for this index we probably need to replace it on the cell..
         if (floatingSelectCell.selectField.element.items)
-            [inlineViews setObject:floatingSelectCell.selectField.collectionView forKey:indexPath];
+            [inlineViews setObject:floatingSelectCell.selectField.collectionView forKey:[self pathCorrectedForInlineView:indexPath]];
         else
-            [inlineViews setObject:floatingSelectCell.selectField.pickerView forKey:indexPath];
+            [inlineViews setObject:floatingSelectCell.selectField.pickerView forKey:[self pathCorrectedForInlineView:indexPath]];
     }
 }
 
@@ -174,25 +190,14 @@
 {
     // correct the index path if we have a current inline cell
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (currentInlineIndexPath)
-    {
-        if (currentInlineIndexPath.section == indexPath.section)
-        {
-            if (currentInlineIndexPath.row<indexPath.row)
-            {
-                indexPath = [NSIndexPath indexPathForRow:indexPath.row-1
-                                               inSection:indexPath.section];
-            }
-        }
-    }
     
-    if (inlineViews[indexPath])
+    NSIndexPath *correctedPath = [self pathCorrectedForInlineView:indexPath];
+    if (inlineViews[correctedPath])
     {
-        if ([currentInlineIndexPath isEqual:indexPath])
+        if ([currentInlineIndexPath isEqual:correctedPath])
         {
-            [self removeInlineViewFromIndexPath:indexPath];
+            [self removeInlineViewFromIndexPath:correctedPath];
         }
         else
         {
@@ -202,7 +207,7 @@
             }
             if ([selectedCell canBecomeFirstResponder])
             {
-                [self insertInlineViewForIndexPath:indexPath];
+                [self insertInlineViewForIndexPath:correctedPath];
                 [selectedCell becomeFirstResponder];
             }
         }

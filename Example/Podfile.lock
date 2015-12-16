@@ -2,7 +2,7 @@ PODS:
   - Expecta (1.0.5)
   - PLForm (HEAD based on 0.1.1):
     - PureLayout
-  - PLFormViewController (0.1.0):
+  - PLFormViewController (0.1.1):
     - PLForm
     - PLTableManager
     - PureLayout
@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   PLForm: dbd6b7a89d25442e8d2a76b9d9a4b9c9ae009d88
-  PLFormViewController: 1f0b7ddd6bf0022354773ea2a537ee2b2b22c8ed
+  PLFormViewController: f3bc6df333dde7eda782e09e7f7c25b63bc541e7
   PLTableManager: ed4806bde600dc5cf2fe04dec3bae33c0da18e8a
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
