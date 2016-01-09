@@ -42,12 +42,29 @@
     }
 }
 
-
-// dates are inline, so we dont want the date to become the first responder
 - (BOOL)canBecomeFirstResponder
 {
-    return YES;
+    return [_dateField canBecomeFirstResponder];
 }
 
+- (BOOL)becomeFirstResponder;
+{
+    return [_dateField becomeFirstResponder];
+}
+
+- (BOOL)canResignFirstResponder;
+{
+    return [_dateField canResignFirstResponder];
+}
+
+- (BOOL)resignFirstResponder;
+{
+    return [_dateField resignFirstResponder];
+}
+
+- (BOOL)isFirstResponder;
+{
+    return [_dateField isFirstResponder];
+}
 
 @end

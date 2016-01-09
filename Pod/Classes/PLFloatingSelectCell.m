@@ -42,10 +42,29 @@
 }
 
 
-// selectes are inline, so we dont want the selectfield to become the first responder
 - (BOOL)canBecomeFirstResponder
 {
-    return YES;
+    return [_selectField canBecomeFirstResponder];
+}
+
+- (BOOL)becomeFirstResponder;
+{
+    return [_selectField becomeFirstResponder];
+}
+
+- (BOOL)canResignFirstResponder;
+{
+    return [_selectField canResignFirstResponder];
+}
+
+- (BOOL)resignFirstResponder;
+{
+    return [_selectField resignFirstResponder];
+}
+
+- (BOOL)isFirstResponder;
+{
+    return [_selectField isFirstResponder];
 }
 
 @end

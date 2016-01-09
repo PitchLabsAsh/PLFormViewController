@@ -19,6 +19,7 @@
 {
     [super viewDidLoad];
     
+//    self.showPickersInline = NO;
     // lets add a simple form with a bunch of components
     // create the form
     
@@ -63,10 +64,13 @@
 - (void)formElementDidChangeValue:(PLFormElement *)formElement;
 {
     // if this is a select with items, then its nice to consider the selection complete and remove the item
-    NSIndexPath *path = [self.dataSource indexPathForItem:formElement];
-    if (path)
+    if (self.showPickersInline)
     {
-        [super tableView:self.tableView didSelectRowAtIndexPath:path];
+        NSIndexPath *path = [self.dataSource indexPathForItem:formElement];
+        if (path)
+        {
+            [super tableView:self.tableView didSelectRowAtIndexPath:path];
+        }
     }
 }
 

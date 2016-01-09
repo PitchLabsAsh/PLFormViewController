@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _showPickersInline = YES;
     inlineViews = [NSMutableDictionary dictionaryWithCapacity:10];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIDatePicker class]];
     [self.cellFactory registerCellClass:[PLFormInlineViewCell class] forModelClass:[UIPickerView class]];
@@ -135,6 +136,10 @@
 // handle the inline insertion delegates
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
+    // if we are not inlineing pickers then dont remove the gestures
+    if (!_showPickersInline)
+        return;
+    
     // floating date cells we need to remove the gesture recogniser and retain the date picker
     if ([cell isKindOfClass:[PLFloatingDateCell class]])
     {
@@ -148,6 +153,7 @@
         [inlineViews setObject:floatingDateCell.dateField.datePicker forKey:[self pathCorrectedForInlineView:indexPath]];
     }
     
+    // same with inline select fields
     if ([cell isKindOfClass:[PLFloatingSelectCell class]])
     {
         PLFloatingSelectCell *floatingSelectCell = (PLFloatingSelectCell*)cell;
@@ -208,7 +214,6 @@
             if ([selectedCell canBecomeFirstResponder])
             {
                 [self insertInlineViewForIndexPath:correctedPath];
-                [selectedCell becomeFirstResponder];
             }
         }
     }

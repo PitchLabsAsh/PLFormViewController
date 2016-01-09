@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PLFormViewController"
-  s.version          = "0.1.2"
+  s.version          = "0.1.3"
   s.summary          = "An extension of PLForm to make building forms into a table view supper easy."
 
 # This description is used to generate tags and improve search results.

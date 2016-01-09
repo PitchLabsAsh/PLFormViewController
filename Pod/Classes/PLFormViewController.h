@@ -11,4 +11,6 @@
 
 @interface PLFormViewController : PLTableViewController <UITableViewDelegate>
 
+@property (nonatomic, assign) BOOL showPickersInline;
+
 @end
