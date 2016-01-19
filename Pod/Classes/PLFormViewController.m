@@ -214,6 +214,7 @@
             if ([selectedCell canBecomeFirstResponder])
             {
                 [self insertInlineViewForIndexPath:correctedPath];
+                [self handleTap:nil];
             }
         }
     }
@@ -230,6 +231,10 @@
                 [self removeInlineViewFromIndexPath:currentInlineIndexPath];
             }
             [selectedCell becomeFirstResponder];
+        }
+        else
+        {
+            [self handleTap:nil];
         }
     }
 }
@@ -248,7 +253,6 @@
 - (void)insertInlineViewForIndexPath:(NSIndexPath *)indexPath
 {
     UIView *presenter = inlineViews[indexPath];
-    
     NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
     [self.memoryDataSource insertItem:presenter toIndexPath:insertIndexPath];
     
@@ -264,8 +268,6 @@
         CGPoint bottomOffset = CGPointMake(0,y);
         [self.tableView setContentOffset:bottomOffset animated:YES];
     }
-    
-    
     currentInlineIndexPath = indexPath;
 }
 
