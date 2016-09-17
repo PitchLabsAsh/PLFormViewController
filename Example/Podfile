@@ -1,17 +1,17 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'PLFormViewController_Example', :exclusive => true do
-  pod "PLFormViewController", :path => "../"
-  pod 'PLTableManager', :head
-  pod 'PLForm', :head
+
+target 'PLFormViewController_Example' do
+  pod 'PLFormViewController', :path => '../'
+  pod 'PLTableManager'
+  pod 'PLForm'
   pod 'TPKeyboardAvoiding'
-  pod 'Reveal-iOS-SDK'
-end
 
-target 'PLFormViewController_Tests', :exclusive => true do
-  pod "PLFormViewController", :path => "../"
+  target 'PLFormViewController_Tests' do
+    inherit! :search_paths
 
-  pod 'Specta'
-  pod 'Expecta'
+  	pod 'Expecta'
+
+  end
 end
